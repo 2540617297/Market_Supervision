@@ -13,14 +13,20 @@
         android:id="@+id/ly_retrieve_bar"
         layout="@layout/activity_main_login_navigation_bar" />
 
-    <ImageView
-        android:id="@+id/iv_login_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:contentDescription="@null"
-        android:paddingTop="48dp"
-        app:srcCompat="@mipmap/logo" />
+    <TextView
+            android:id="@+id/iv_login_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="市场监管行政执法卫士"
+            android:textColor="@color/login_other_color"
+            android:contentDescription="@null"
+            android:paddingTop="20dp"
+            android:textSize="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="25dp"
+            android:scaleType="centerInside"
+    />
 
     <LinearLayout
         android:id="@+id/ll_register_phone"

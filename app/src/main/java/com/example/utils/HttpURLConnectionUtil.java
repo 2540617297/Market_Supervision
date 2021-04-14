@@ -1,6 +1,8 @@
 package com.example.utils;
 
 
+import androidx.annotation.Nullable;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -64,7 +66,7 @@ public class HttpURLConnectionUtil {
      * @param param 参数
      * @return
      */
-    public static String doPost(String httpUrl,  String param) {
+    public static String doPost(String httpUrl, @Nullable String param) {
         StringBuffer result = new StringBuffer();
         //连接
         HttpURLConnection connection = null;
