@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.constant.CommonConstant;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 OkHttpClient okHttpClient = new OkHttpClient();
                 RequestBody requestBody=builder.build();
-                String loginUrl="http://192.168.3.77:12345/init/register";
+                String loginUrl="http://"+ CommonConstant.srvIp+":12345/init/register";
                 System.out.println(loginUrl);
                 Request request=new Request.Builder().url(loginUrl).post(requestBody).build();
                 Call call=okHttpClient.newCall(request);

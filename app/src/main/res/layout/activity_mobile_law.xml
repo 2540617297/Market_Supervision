@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MobileLaw">
+    <ImageView
+            android:id="@+id/iv_login_logo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@null"
+            android:paddingTop="20dp"
+            android:background="@mipmap/mobile_law"
+            android:scaleType="centerInside"
+    />
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="移动执法"
+              android:textSize="20dp"
+              android:layout_gravity="center"
+              android:layout_marginBottom="20dp"
+    ></TextView>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+    >
+        <Button
+                android:text="开启定位签到"
+                android:onClick="onClick"
+                android:id="@+id/Location_Sign"
+                android:background="@color/text_yellow"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/font_16"
+                android:layout_height="wrap_content" >
+
+        </Button>
+        <Button
+                android:text="监督性检查单"
+                android:onClick="onClick"
+                android:id="@+id/Check_list"
+                android:background="@color/text_yellow"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/font_16"
+                android:layout_height="wrap_content">
+        </Button>
+        <Button
+                android:text="询问笔录"
+                android:background="@color/text_yellow"
+                android:layout_marginBottom="@dimen/font_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+        </Button>
+        <Button
+                android:text="现场通知单"
+                android:background="@color/text_yellow"
+                android:layout_marginBottom="@dimen/font_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        </Button>
+        <Button
+                android:text="立案申请书"
+                android:onClick="onClick"
+                android:id="@+id/task_distribution"
+                android:background="@color/text_yellow"
+                android:layout_marginBottom="@dimen/font_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        </Button>
+        <Button
+                android:text="结束签到"
+                android:onClick="onClick"
+                android:id="@+id/Cancle_Location_Sign"
+                android:background="@color/text_yellow"
+                android:layout_marginBottom="@dimen/font_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        </Button>
+    </LinearLayout>
+
+</LinearLayout>

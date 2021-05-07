@@ -2,8 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="com.example.market_supervision">
-
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/> <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET"/> <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/> <!-- 用于写入缓存数据到扩展存储卡 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/> <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/> <!-- 解锁屏幕需要的权限 -->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/> <!-- 申请电源锁需要的权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/> <!-- 震动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE"/> <!-- android 9.0之后使用前台服务，需要添加权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
             android:allowBackup="true"
@@ -14,14 +30,77 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".UserInfo">
+        <activity
+                android:theme="@style/Account_Base.App.Theme.NoTitle"
+                android:name=".UserSearch">
         </activity>
+        <activity android:name=".PatrolRecord">
+        </activity>
+        <activity android:name=".SynthesizeQuery">
+        </activity>
+        <activity
+                android:name="websocketclientdemo.MainActivity"
+                android:launchMode="singleInstance"
+                android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <service
+                android:name="websocketclientdemo.im.JWebSocketClientService"
+                android:enabled="true"
+                android:exported="true"/>
+        <service
+                android:name="websocketclientdemo.im.JWebSocketClientService$GrayInnerService"
+                android:enabled="true"
+                android:exported="false"
+                android:process=":gray"/>
+
+        <activity android:name=".Check_List">
+        </activity>
+        <activity android:name=".MobileLaw">
+        </activity>
+        <activity
+                android:name=".Map"
+                android:launchMode="singleTask">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN"/> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+            <!-- </intent-filter> -->
+        </activity>
+
+        <meta-data
+                android:name="com.amap.api.v2.apikey"
+                android:value="034d7305d2b8bf9504178c1f27773d3d">
+        </meta-data>
+
+        <service android:name="com.amap.api.location.APSService"/>
+        <service android:name=".MapService"/>
+
+        <activity android:name=".TaskDistribution">
+        </activity>
+        <activity
+                android:name=".BackLog"
+                android:theme="@style/Account_Base.App.Theme.NoTitle">
+        </activity>
+        <activity
+                android:name=".UserInfoEdit"
+                android:theme="@style/Account_Base.App.Theme.NoTitle">
+        </activity> <!-- <activity android:name=".UserInfo"> -->
+        <!-- </activity> -->
         <!-- <activity android:name=".WorkContent"> -->
         <!-- </activity> -->
         <activity
                 android:name=".HomeActivity"
                 android:label="主页"
+                android:launchMode="singleTask"
                 android:theme="@style/Account_Base.App.Theme.NoTitle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
                 android:name=".LoginActivity"
@@ -31,11 +110,7 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/Account_Base.App.Theme.NoTitle"
                 android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
                 android:name=".RegisterActivity"

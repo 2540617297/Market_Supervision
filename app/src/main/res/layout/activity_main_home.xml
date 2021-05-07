@@ -17,6 +17,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:textSize="18sp"
+                android:background="@color/text_yellow"
                 android:textColor="@color/text_topbar"
                 android:text="市场监管"/>
 

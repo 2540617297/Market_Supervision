@@ -2,12 +2,16 @@ package com.example.market_supervision;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.alibaba.fastjson.JSON;
+import com.example.utils.SPUtils;
+import websocketclientdemo.MainActivity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,9 +34,27 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main_home);
+//        LoginActivity.finsh();
         fManager = getFragmentManager();
         bindViews();
         txt_channel.performClick();   //模拟一次点击，既进去后选择第一项
+        if(userInfo!=null) {
+            findViewById(R.id.re_myinfo).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(HomeActivity.this, UserInfoEdit.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        System.out.println("onrestart");
+        txt_channel.performClick();
     }
 
     //UI组件初始化与事件绑定
@@ -101,16 +123,40 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     fTransaction.show(userInfo);
                 }
                 break;
-//            case R.id.txt_setting:
-//                setSelected();
-//                txt_setting.setSelected(true);
-//                if(fg4 == null){
-//                    fg4 = new MyFragment("第四个Fragment");
-//                    fTransaction.add(R.id.ly_content,fg4);
-//                }else{
-//                    fTransaction.show(fg4);
-//                }
-//                break;
+            case R.id.re_myinfo:
+                System.out.println("nihao");
+                Intent intent = new Intent(HomeActivity.this, UserInfoEdit.class);
+                startActivity(intent);
+                break;
+            case R.id.back_log:
+                System.out.println(SPUtils.get(getApplicationContext(),"session","session"));
+                Intent backLog = new Intent(HomeActivity.this, BackLog.class);
+                startActivity(backLog);
+                break;
+            case R.id.task_distribution:
+                Intent taskDistribution = new Intent(HomeActivity.this, TaskDistribution.class);
+                startActivity(taskDistribution);
+                break;
+            case R.id.map:
+                Intent map = new Intent(HomeActivity.this, Map.class);
+                startActivity(map);
+                break;
+            case R.id.Mobile_Law:
+                Intent mobileLaw = new Intent(HomeActivity.this,MobileLaw.class);
+                startActivity(mobileLaw);
+                break;
+            case R.id.chat:
+                Intent userSearch=new Intent(HomeActivity.this, UserSearch.class);
+                startActivity(userSearch);
+                break;
+            case R.id.synthesize_query:
+                Intent query=new Intent(HomeActivity.this,SynthesizeQuery.class);
+                startActivity(query);
+                break;
+            case R.id.Patrol_Record:
+                Intent patrolRecord=new Intent(HomeActivity.this,PatrolRecord.class);
+                startActivity(patrolRecord);
+                break;
         }
         fTransaction.commit();
     }

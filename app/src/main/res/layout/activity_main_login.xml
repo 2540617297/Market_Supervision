@@ -70,7 +70,7 @@
                 android:focusable="true"
                 android:hint="@string/login_input_username_hint"
                 android:imeOptions="actionDone"
-                android:inputType="textPhonetic"
+                android:inputType="none"
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"
