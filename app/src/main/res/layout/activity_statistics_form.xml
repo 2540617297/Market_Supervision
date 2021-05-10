@@ -6,62 +6,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".SynthesizeQuery">
+        tools:context=".StatisticsForm">
     <ImageView
             android:id="@+id/iv_login_logo"
-            android:layout_width="180dp"
-            android:layout_height="146dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@null"
             android:paddingTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@mipmap/enforce"
+            android:background="@mipmap/mobile_law"
             android:scaleType="centerInside"
     />
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/title_bar_txt_size"
-            android:layout_marginBottom="20dp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:text="综合执法查询"
-    >
-
-    </TextView>
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="统计报表"
+              android:textSize="20dp"
+              android:layout_gravity="center"
+              android:layout_marginBottom="20dp"
+    ></TextView>
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:orientation="vertical">
+                  android:orientation="vertical"
+    >
         <Button
-                android:text="案件查询"
+                android:text="监督性检查单"
                 android:onClick="onClick"
-                android:id="@+id/back_log"
+                android:id="@+id/Form_Check_List"
                 android:background="@color/text_yellow"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="@dimen/font_16"
+                android:layout_height="wrap_content">
+        </Button>
+        <Button
+                android:text="询问笔录"
+                android:background="@color/text_yellow"
+                android:layout_marginBottom="@dimen/font_16"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
         </Button>
         <Button
-                android:text="统计报表"
-                android:onClick="onClick"
-                android:id="@+id/Statistic_Form"
-                android:background="@color/text_yellow"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/font_16"
-                android:layout_height="wrap_content">
-        </Button>
-        <Button
-                android:text="企业信息查询"
-                android:onClick="onClick"
-                android:id="@+id/EnterPriseQuery"
+                android:text="现场通知单"
                 android:background="@color/text_yellow"
                 android:layout_marginBottom="@dimen/font_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
         </Button>
         <Button
-                android:text="法规查询"
+                android:text="立案申请书"
                 android:onClick="onClick"
                 android:id="@+id/task_distribution"
                 android:background="@color/text_yellow"

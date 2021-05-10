@@ -32,7 +32,17 @@
             tools:ignore="GoogleAppIndexingWarning">
         <activity
                 android:theme="@style/Account_Base.App.Theme.NoTitle"
-                android:name=".UserSearch">
+                android:name=".EnterPriseList">
+        </activity>
+        <activity
+                android:name=".Lists_Checks"
+                android:theme="@style/Account_Base.App.Theme.NoTitle">
+        </activity>
+        <activity android:name=".StatisticsForm">
+        </activity>
+        <activity
+                android:name=".UserSearch"
+                android:theme="@style/Account_Base.App.Theme.NoTitle">
         </activity>
         <activity android:name=".PatrolRecord">
         </activity>
@@ -110,7 +120,6 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/Account_Base.App.Theme.NoTitle"
                 android:windowSoftInputMode="stateHidden|adjustResize">
-
         </activity>
         <activity
                 android:name=".RegisterActivity"
