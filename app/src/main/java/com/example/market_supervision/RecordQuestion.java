@@ -2,7 +2,6 @@ package com.example.market_supervision;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,15 +11,14 @@ import com.example.constant.CommonConstant;
 import com.example.constant.UserInfo;
 import com.example.utils.SPUtils;
 
-public class PatrolRecord extends AppCompatActivity {
+public class RecordQuestion extends AppCompatActivity {
 
     private WebView webView;
-    private long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patrol_record);
+        setContentView(R.layout.activity_record_question);
         webView = new WebView(this);
         webView.setWebViewClient(new WebViewClient() {
             //设置在webView点击打开的新网页在当前界面显示,而不跳转到新的浏览器中
@@ -50,21 +48,9 @@ public class PatrolRecord extends AppCompatActivity {
         String userInfoSP= (String) SPUtils.get(getApplicationContext(),"userInfo","userinfo");
         com.example.constant.UserInfo userInfo= JSON.parseObject(userInfoSP, UserInfo.class);
         System.out.println(userInfo);
-        String url="http://"+ CommonConstant.srvIp +":12345/market/mobileLaw/patrolRecord?userId="+userInfo.getUserId();
+        String url="http://"+ CommonConstant.srvIp +":12345/market/mobileLaw/recordQuestionWrite?userId="+userInfo.getUserId();
         webView.loadUrl(url);
         //调用loadUrl方法为WebView加入链接
         setContentView(webView);                           //调用Activity提供的setContentView将webView显示出来
-        webView.addJavascriptInterface(new PatrolRecord.JavascriptCloseInterface(), "activity");
-    }
-
-    public class JavascriptCloseInterface {
-        @JavascriptInterface
-        public void over(String routeId) {
-            Intent intent=new Intent(PatrolRecord.this,Map.class);
-            System.out.println("routeid:"+routeId);
-            intent.putExtra("routeId",routeId);
-            startActivity(intent);
-        }
-
     }
 }

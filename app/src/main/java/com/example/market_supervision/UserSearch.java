@@ -22,13 +22,16 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class UserSearch extends AppCompatActivity {
     EditText userSearchContext;
     Button searchBtn;
     ListView lvResults;
-    HashMap<String,Object> hashMapInfo;
+    List<UserInfo > userInfos=new ArrayList<>();
     List<HashMap<String, Object>> listitem;
+    ListView listView;
+    SimpleAdapter myAdapter;
 
 
     @Override
@@ -41,18 +44,28 @@ public class UserSearch extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        final ArrayList<String> title=new ArrayList<>();
-        final ArrayList<String> id=new ArrayList<>();
-        final ArrayList<Integer> head=new ArrayList<>();
+
 
         lvResults=findViewById(R.id.search_result);
+        listView = findViewById(R.id.search_result);
         searchBtn=findViewById(R.id.search_btn);
         userSearchContext=findViewById(R.id.search_et_input);
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<String> title=new ArrayList<>();
+                ArrayList<String> id=new ArrayList<>();
+                ArrayList<Integer> head=new ArrayList<>();
                 try {
-                    OkHttpClient okHttpClient = new OkHttpClient();
+                    if(myAdapter!=null) {
+                        listitem = null;
+                        System.out.println(listitem);
+                        myAdapter.notifyDataSetChanged();
+                        listView.setAdapter(myAdapter);
+                    }
+                    OkHttpClient okHttpClient = new OkHttpClient().newBuilder().connectTimeout(60000, TimeUnit.MILLISECONDS)
+                            .readTimeout(60000, TimeUnit.MILLISECONDS)
+                            .build();
                     String loginUrl="http://"+ CommonConstant.srvIp +":12345/market/init/searchUser?search="+userSearchContext.getText().toString();
                     System.out.println(loginUrl);
                     Request request=new Request.Builder().url(loginUrl).build();
@@ -66,6 +79,7 @@ public class UserSearch extends AppCompatActivity {
                         for (Object j :
                                 jsonArray) {
                             UserInfo userInfo=JSONObject.parseObject(JSON.toJSONString(j),UserInfo.class);
+                            userInfos.add(userInfo);
                             title.add(userInfo.getUserName());
                             id.add(userInfo.getUserId());
                             head.add(R.mipmap.head2);
@@ -78,8 +92,9 @@ public class UserSearch extends AppCompatActivity {
                             showitem.put("imgtou", head.get(i));
                             listitem.add(showitem);
                         }
-                        SimpleAdapter myAdapter = new SimpleAdapter(getApplicationContext(), listitem, R.layout.item_bean_list, new String[]{"imgtou", "search_title", "search_content"}, new int[]{R.id.imgtou, R.id.search_title, R.id.search_content});
-                        ListView listView = findViewById(R.id.search_result);
+                        myAdapter = new SimpleAdapter(getApplicationContext(), listitem, R.layout.item_bean_list, new String[]{"imgtou", "search_title", "search_content"}, new int[]{R.id.imgtou, R.id.search_title, R.id.search_content});
+//                        listView = findViewById(R.id.search_result);
+                        myAdapter.notifyDataSetChanged();
                         System.out.println(myAdapter);
                         listView.setAdapter(myAdapter);
                         Toast.makeText(getApplicationContext(), "成功", Toast.LENGTH_SHORT).show();
@@ -92,5 +107,33 @@ public class UserSearch extends AppCompatActivity {
 
             }
         });
+        ListView listView = findViewById(R.id.search_result);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListView listView = (ListView)parent;
+                HashMap<String, String> map = (HashMap<String, String>) listView.getItemAtPosition(position);
+                String userid = map.get("search_content");
+                String name = map.get("search_title");
+                System.out.println(userid+":"+name);
+                System.out.println("onldjvosdivnovnsoevnien************");
+                Intent intent=new Intent(UserSearch.this,SendUserInfo.class);
+                for (UserInfo u:userInfos){
+                    if(u.getUserId()==userid){
+                        intent.putExtra("userId",u.getUserId());
+                        intent.putExtra("userName",u.getUserName());
+                        intent.putExtra("phone",u.getPhoneNo());
+                        intent.putExtra("userNameCN",u.getUserNameCN());
+                    }
+                }
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
     }
 }

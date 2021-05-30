@@ -20,6 +20,12 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/> <!-- 震动权限 -->
     <uses-permission android:name="android.permission.VIBRATE"/> <!-- android 9.0之后使用前台服务，需要添加权限 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+<!--    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO">
+
+    </uses-permission>
 
     <application
             android:allowBackup="true"
@@ -30,9 +36,17 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".RecordQuestionList">
+        </activity>
+        <activity android:name=".RecordQuestion">
+        </activity>
         <activity
-                android:theme="@style/Account_Base.App.Theme.NoTitle"
-                android:name=".EnterPriseList">
+                android:name=".SendUserInfo"
+                android:theme="@style/Account_Base.App.Theme.NoTitle">
+        </activity>
+        <activity
+                android:name=".EnterPriseList"
+                android:theme="@style/Account_Base.App.Theme.NoTitle">
         </activity>
         <activity
                 android:name=".Lists_Checks"
@@ -106,11 +120,6 @@
                 android:label="主页"
                 android:launchMode="singleTask"
                 android:theme="@style/Account_Base.App.Theme.NoTitle">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
                 android:name=".LoginActivity"
@@ -120,6 +129,11 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/Account_Base.App.Theme.NoTitle"
                 android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
                 android:name=".RegisterActivity"

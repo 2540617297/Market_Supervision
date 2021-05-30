@@ -18,6 +18,11 @@ public class StatisticsForm extends AppCompatActivity {
             case R.id.Form_Check_List:
                 Intent formCheck=new Intent(StatisticsForm.this,Lists_Checks.class);
                 startActivity(formCheck);
+                break;
+            case R.id.record_question_list:
+                Intent rqList=new Intent(StatisticsForm.this,RecordQuestionList.class);
+                startActivity(rqList);
+                break;
         }
     }
 }

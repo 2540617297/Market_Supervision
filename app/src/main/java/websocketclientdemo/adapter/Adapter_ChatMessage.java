@@ -58,7 +58,7 @@ public class Adapter_ChatMessage extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         ChatMessage mChatMessage = mChatMessageList.get(i);
         String content = mChatMessage.getContent();
-        String sendUser=mChatMessage.getSendUser();
+        String userNameCN=mChatMessage.getUserNameCN();
         String time = formatTime(mChatMessage.getTime());
         int isMeSend = mChatMessage.getIsMeSend();
         int isRead = mChatMessage.getIsRead();////是否已读（0未读 1已读）
@@ -101,7 +101,7 @@ public class Adapter_ChatMessage extends BaseAdapter {
             }
         }else{
             holder.tv_display_name.setVisibility(View.VISIBLE);
-            holder.tv_display_name.setText("服务器");
+            holder.tv_display_name.setText(userNameCN);
         }
 
         return view;

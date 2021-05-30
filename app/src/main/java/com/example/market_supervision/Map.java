@@ -1,21 +1,42 @@
 package com.example.market_supervision;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.animation.LinearInterpolator;
+import android.widget.SimpleAdapter;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.*;
-import com.amap.api.maps.model.AMapPara;
-import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.*;
+import com.amap.api.maps.model.animation.Animation;
+import com.amap.api.maps.model.animation.ScaleAnimation;
+import com.example.constant.CommonConstant;
+import com.example.constant.RouteInfo;
+import com.example.constant.UserInfo;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Map extends AppCompatActivity implements AMapLocationListener{
 
@@ -43,9 +64,10 @@ public class Map extends AppCompatActivity implements AMapLocationListener{
         mUiSettings = aMap.getUiSettings();//实例化UiSettings类对象
         //显示定位蓝点
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
-        myLocationStyle.interval(1000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
+        myLocationStyle.interval(10000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
 //        myLocationStyle.showMyLocation(false);
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）默认执行此种模式。
+//        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）默认执行此种模式。
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER);//连续定位、蓝点不会移动到地图中心点，定位点依照设备方向旋转，并且蓝点会跟随设备移动。
 //        aMap.setLocationSource(this);//通过aMap对象设置定位数据源的监听
         mUiSettings.setMyLocationButtonEnabled(true); //显示默认的定位按钮
         mUiSettings.setCompassEnabled(true);
@@ -54,8 +76,94 @@ public class Map extends AppCompatActivity implements AMapLocationListener{
         //"权限已申请";
         showLocation();
 
+//        //设置中心点和缩放比例
+
+        List<LatLng> latLngs=new ArrayList<>();
+        Intent intent=getIntent();
+        String routeId=intent.getStringExtra("routeId");
+        if(routeId!=null) {
+            try {
+                OkHttpClient okHttpClient = new OkHttpClient().newBuilder().connectTimeout(60000, TimeUnit.MILLISECONDS)
+                        .readTimeout(60000, TimeUnit.MILLISECONDS)
+                        .build();
+                String loginUrl = "http://" + CommonConstant.srvIp + ":12345/market/mobileLaw/getLatLng?routeId=" + routeId.substring(1);
+                System.out.println(loginUrl);
+                Request request = new Request.Builder().url(loginUrl).build();
+                Response response = okHttpClient.newCall(request).execute();
+                if (response.isSuccessful()) {
+                    //登录信息
+                    String getRouteInfo = response.body().string();
+                    JSONArray jsonArray = JSON.parseArray(getRouteInfo);
+                    for (Object j :
+                            jsonArray) {
+                        RouteInfo routeInfo = JSONObject.parseObject(JSON.toJSONString(j), RouteInfo.class);
+                        latLngs.add(new LatLng(routeInfo.getmLatitude(), routeInfo.getmLongitude()));
+                        addMarkers(routeInfo.getmLatitude(), routeInfo.getmLongitude());
+                        System.out.println(routeInfo);
+                    }
+                    if (latLngs != null) {
+                        aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLngs.get(0)));
+                    }
+                    aMap.setMapTextZIndex(2);
+                    aMap.addPolyline((new PolylineOptions())
+                            //手动数据测试
+                            //.add(new LatLng(31.755090213041477, 117.25183707934592),new LatLng(31.753250606283274,117.25086836479817),new LatLng(31.751155, 117.254453))
+                            //集合数据
+                            .addAll(latLngs)
+                            //线的宽度
+                            .width(10).setDottedLine(true).geodesic(true)
+                            //颜色
+                            .color(Color.argb(255, 255, 20, 147)));
+                    Toast.makeText(getApplicationContext(), "成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    throw new IOException("Unexpected code " + response);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+//        latLngs.add(new LatLng(31.755090213041477, 117.25183707934592));
+//        latLngs.add(new LatLng(31.753250606283274,117.25086836479817));
+//        latLngs.add(new LatLng(31.751155, 117.254453));
+//        addMarkers(31.755090213041477, 117.25183707934592);
+//        addMarkers(31.753250606283274, 117.25086836479817);
+//        addMarkers(31.751155, 117.254453);
+
+//        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get(0), 7));
+//        LatLng marker1 = new LatLng(31.755090213041477, 117.25183707934592);
 
 
+
+    }
+
+    private void addMarkers(Double latitude,Double longitude) {
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.anchor(1.3f, 1.5f);//点标记的锚点
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
+                R.mipmap.position);
+        markerOptions.icon(BitmapDescriptorFactory
+                .fromBitmap(bitmap));
+        markerOptions.position(new LatLng(latitude, longitude));
+        Marker growMarker = aMap.addMarker(markerOptions);
+        growMarker.setClickable(true); //marker 设置是否可点击
+        startGrowAnimation(growMarker);
+        growMarker.showInfoWindow();
+    }
+
+    private void startGrowAnimation(Marker marker) {
+
+        if (marker != null) {
+            Animation animation = new ScaleAnimation(0, 1, 0, 1);
+            animation.setInterpolator(new LinearInterpolator());
+            //整个移动所需要的时间
+            animation.setDuration(1000);
+            animation.setFillMode(1);//动画保存之前的状态为1 之后为0
+            //设置动画
+            marker.setAnimation(animation);
+            //开始动画
+            marker.startAnimation();
+            marker.showInfoWindow();
+        }
     }
 
     @Override

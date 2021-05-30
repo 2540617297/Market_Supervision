@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.*;
 import android.util.Log;
 import androidx.core.app.NotificationCompat;
+import com.example.constant.CommonConstant;
 import com.example.market_supervision.R;
 import com.example.utils.SPUtils;
 import websocketclientdemo.MainActivity;
@@ -109,8 +110,8 @@ public class JWebSocketClientService extends Service {
      * 初始化websocket连接
      */
     private void initSocketClient() {
-        String userId= (String) SPUtils.get(getApplicationContext(),"userId","1");
-        String url="ws://192.168.1.107:12345/market/chat/"+userId;
+        String userId= (String) SPUtils.get(getApplicationContext(),"userId","x");
+        String url="ws://"+ CommonConstant.srvIp+ ":12345/market/chat/"+userId;
         System.out.println(url);
         URI uri = URI.create(url);
         client = new JWebSocketClient(uri) {

@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import com.alibaba.fastjson.JSON;
+import com.example.constant.UserInfo;
 import com.example.market_supervision.HomeActivity;
 import com.example.market_supervision.R;
 import com.example.utils.SPUtils;
@@ -43,9 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ListView listView;
     private Button btn_send;
     private List<ChatMessage> chatMessageList = new ArrayList<>();//消息列表
-    private Adapter_ChatMessage adapter_chatMessage;
     private ChatMessageReceiver chatMessageReceiver;
-    String nowSendUser="1";
+    private String bSendUser="x";
+    private String userNameCN;
 
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
@@ -68,10 +70,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onReceive(Context context, Intent intent) {
             String message=intent.getStringExtra("message");
             ChatMessage chatMessage=new ChatMessage();
-            chatMessage.setContent(message);
-            String sendUserno = message.split("[|]")[1];
-//            String nowUser=(String)SPUtils.get(getApplicationContext(),"userId","1");
-            chatMessage.setSendUser(sendUserno);
+            chatMessage.setContent(message.split("[|]")[0]);
+//            content=content+"|"+bSendUser+"|"+userNameCN+"|"+nsenduser;//内容+被发送人id+发送人名+发送人id
+            String nSendUser=message.split("[|]")[3];
+            String bsendUserno = message.split("[|]")[1];
+            String userNameCN = message.split("[|]")[2];
+            chatMessage.setGetbSendUser(bsendUserno);
+            chatMessage.setGetnSendUser(nSendUser);
+            chatMessage.setUserNameCN(userNameCN);
             chatMessage.setIsMeSend(0);
             chatMessage.setIsRead(1);
             chatMessage.setTime(System.currentTimeMillis()+"");
@@ -86,6 +92,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
         mContext=MainActivity.this;
+        bSendUser=(String)SPUtils.get(getApplicationContext(),"sendUserId","x");
+        String userInfoSP= (String) SPUtils.get(getApplicationContext(),"userInfo","userinfo");
+        com.example.constant.UserInfo userInfo= JSON.parseObject(userInfoSP, UserInfo.class);
+        userNameCN=userInfo.getUserNameCN();
         System.out.println("oncreate");
         //启动服务
         startJWebSClientService();
@@ -164,13 +174,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 if (client != null && client.isOpen()) {
+                    String nsenduser=(String)SPUtils.get(getApplicationContext(),"userId","x");
+                    content=content+"|"+bSendUser+"|"+userNameCN+"|"+nsenduser;//内容+被发送人id+发送人名+发送人id
                     jWebSClientService.sendMsg(content);
-
                     //暂时将发送的消息加入消息列表，实际以发送成功为准（也就是服务器返回你发的消息时）
                     ChatMessage chatMessage=new ChatMessage();
-                    String sendUser = content.split("[|]")[1];
-                    nowSendUser=sendUser;
-                    chatMessage.setSendUser(sendUser);
+                    content=content.split("[|]")[0];
+                    chatMessage.setMybSendUser(bSendUser);
+                    chatMessage.setMynSendUser(nsenduser);
                     chatMessage.setContent(content);
                     chatMessage.setIsMeSend(1);
                     chatMessage.setIsRead(1);
@@ -189,20 +200,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initChatMsgListView(){
         List<ChatMessage> nowchatMessageList = new ArrayList<>();
-        String nowUser=(String)SPUtils.get(getApplicationContext(),"userId","1");
+        String nowUser = (String) SPUtils.get(getApplicationContext(), "userId", "1");
+        System.out.println(nowUser);
         for (ChatMessage c :
                 chatMessageList) {
-            if (c.getSendUser().equals(nowSendUser)||c.getSendUser().equals(nowUser) ) {
+            if (bSendUser.equals(c.getGetnSendUser()) || bSendUser.equals(c.getMybSendUser())) {
                 nowchatMessageList.add(c);
             }
         }
+        System.out.println(nowchatMessageList);
 //        adapter_chatMessage = new Adapter_ChatMessage(mContext, chatMessageList);
-        adapter_chatMessage = new Adapter_ChatMessage(mContext, nowchatMessageList);
+        Adapter_ChatMessage adapter_chatMessage = new Adapter_ChatMessage(mContext, nowchatMessageList);
+        adapter_chatMessage.notifyDataSetChanged();
 //        adapter_chatMessage.getView()
         listView.setAdapter(adapter_chatMessage);
         listView.setSelection(chatMessageList.size());
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        System.out.println("onrestart*********");
+        bSendUser=(String)SPUtils.get(getApplicationContext(),"sendUserId","x");
+        initChatMsgListView();
+    }
 
     /**
      * 检测是否开启通知

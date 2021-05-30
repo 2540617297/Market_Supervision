@@ -30,6 +30,10 @@ public class MobileLaw extends AppCompatActivity {
                 stopService(mapLocation);
                 Toast.makeText(getApplicationContext(), "定位结束，辛苦了！", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.record_question_write:
+                Intent recordQuestionWrite=new Intent(MobileLaw.this,RecordQuestion.class);
+                startActivity(recordQuestionWrite);
+                break;
         }
     }
 }
