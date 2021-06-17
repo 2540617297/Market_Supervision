@@ -35,6 +35,9 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".InitiateApplication"
+                  android:theme="@style/Account_Base.App.Theme.NoTitle">
+        </activity>
         <activity
                 android:name=".SpotNotice"
                 android:theme="@style/Account_Base.App.Theme.NoTitle">

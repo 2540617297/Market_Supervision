@@ -69,7 +69,7 @@
         <Button
                 android:text="立案申请书"
                 android:onClick="onClick"
-                android:id="@+id/task_distribution"
+                android:id="@+id/IA"
                 android:background="@color/text_yellow"
                 android:layout_marginBottom="@dimen/font_16"
                 android:layout_width="match_parent"

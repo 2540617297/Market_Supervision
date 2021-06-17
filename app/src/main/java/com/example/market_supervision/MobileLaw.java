@@ -38,6 +38,10 @@ public class MobileLaw extends AppCompatActivity {
                 Intent spotNotice = new Intent(MobileLaw.this,SpotNotice.class);
                 startActivity(spotNotice);
                 break;
+            case R.id.IA:
+                Intent IA=new Intent(MobileLaw.this,InitiateApplication.class);
+                startActivity(IA);
+                break;
         }
     }
 }
