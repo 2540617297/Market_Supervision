@@ -27,6 +27,8 @@
             android:background="@drawable/radius"
             android:layout_width="300dp"
             android:layout_height="200dp"
+            android:onClick="onClick"
+            android:id="@+id/service"
             android:gravity="center"
     >
         <ImageView

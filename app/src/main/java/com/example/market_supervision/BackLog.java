@@ -46,11 +46,8 @@ public class BackLog extends AppCompatActivity {
         });
         webView.getSettings().setJavaScriptEnabled(true);  //设置WebView属性,运行执行js脚本
         webView.getSettings().setBuiltInZoomControls(false);
-//        webView.getSettings().setUserAgentString(webView.getSettings().getUserAgentString()+"SESSIONID="+ SPUtils.get(getApplicationContext(),"session","session"));
         String url="http://"+ CommonConstant.srvIp +":12345/market/work/BackLog?userId="+SPUtils.get(getApplicationContext(),"userId","1");
-//        WebViewHeader.synCookies(getApplicationContext(),url);
         webView.loadUrl(url);
-        //调用loadUrl方法为WebView加入链接
 //        setContentView(webView);                           //调用Activity提供的setContentView将webView显示出来
         findViewById(R.id.back_log_back).setOnClickListener(new View.OnClickListener() {
             @Override

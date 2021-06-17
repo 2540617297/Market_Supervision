@@ -34,6 +34,10 @@ public class MobileLaw extends AppCompatActivity {
                 Intent recordQuestionWrite=new Intent(MobileLaw.this,RecordQuestion.class);
                 startActivity(recordQuestionWrite);
                 break;
+            case R.id.Spot_Notice:
+                Intent spotNotice = new Intent(MobileLaw.this,SpotNotice.class);
+                startActivity(spotNotice);
+                break;
         }
     }
 }

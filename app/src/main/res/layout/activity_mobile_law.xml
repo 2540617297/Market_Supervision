@@ -59,6 +59,8 @@
         </Button>
         <Button
                 android:text="现场通知单"
+                android:onClick="onClick"
+                android:id="@+id/Spot_Notice"
                 android:background="@color/text_yellow"
                 android:layout_marginBottom="@dimen/font_16"
                 android:layout_width="match_parent"

@@ -157,6 +157,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Intent patrolRecord=new Intent(HomeActivity.this,PatrolRecord.class);
                 startActivity(patrolRecord);
                 break;
+            case R.id.service:
+                Intent service=new Intent(HomeActivity.this,ServiceShowList.class);
+                startActivity(service);
+                break;
         }
         fTransaction.commit();
     }

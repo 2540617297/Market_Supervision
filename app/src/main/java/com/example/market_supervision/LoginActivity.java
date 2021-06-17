@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                 System.out.println(loginUrl);
                 Request request=new Request.Builder().url(loginUrl).build();
                 Call call=okHttpClient.newCall(request);
+
                 call.enqueue(new Callback() {
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -106,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                         Looper.loop();
                     }
                 });
+
             }
         });
 
@@ -116,5 +118,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 }
