@@ -40,9 +40,9 @@
 
         </Button>
         <Button
-                android:text="巡查记录"
+                android:text="统计报表"
                 android:onClick="onClick"
-                android:id="@+id/Patrol_Record"
+                android:id="@+id/Statistic_Form"
                 android:background="@color/text_yellow"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="@dimen/font_16"
@@ -76,15 +76,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
         </Button>
+
         <Button
-                android:text="定位显示"
+                android:text="文件上传"
                 android:onClick="onClick"
-                android:id="@+id/map"
+                android:id="@+id/fileChoose"
                 android:background="@color/text_yellow"
                 android:layout_marginBottom="@dimen/font_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
         </Button>
+
     </LinearLayout>
 
 </LinearLayout>

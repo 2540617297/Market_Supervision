@@ -58,8 +58,6 @@ import java.util.List;
 public class Check_List extends AppCompatActivity {
 
     private WebView webView;
-    private long exitTime = 0;
-    private String TMP_URL = "http://cl.beisun.com/mbp/androdTest/index.html";
     private ValueCallback<Uri> mUploadMessage;// 表单的数据信息
     private ValueCallback<Uri[]> mUploadCallbackAboveL;
     private final static int FILECHOOSER_RESULTCODE = 1;// 表单的结果回调</span>
@@ -116,20 +114,25 @@ public class Check_List extends AppCompatActivity {
                                              ValueCallback<Uri[]> filePathCallback,
                                              FileChooserParams fileChooserParams) {
                 mUploadCallbackAboveL=filePathCallback;
-                take();
+                for (String s :
+                        fileChooserParams.getAcceptTypes()) {
+                    System.out.println(s);
+                }
+                String[] acceptTypes=fileChooserParams.getAcceptTypes();
+                take(acceptTypes[0]);
                 return true;
             }
             public void openFileChooser(ValueCallback<Uri> uploadMsg) {
                 mUploadMessage=uploadMsg;
-                take();
+//                take();
             }
             public void openFileChooser(ValueCallback<Uri> uploadMsg,String acceptType) {
                 mUploadMessage=uploadMsg;
-                take();
+                take(acceptType);
             }
             public void openFileChooser(ValueCallback<Uri> uploadMsg,String acceptType, String capture) {
                 mUploadMessage=uploadMsg;
-                take();
+                take(acceptType);
             }
         });
     }
@@ -216,17 +219,25 @@ public class Check_List extends AppCompatActivity {
         }
     }
 
-    private void take(){
+    private void take(String acceptTypes){
         File imageStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MyApp");
         // Create the storage directory if it does not exist
         if (! imageStorageDir.exists()){
             imageStorageDir.mkdirs();
         }
-        File file = new File(imageStorageDir + File.separator + "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+        File file;
+        Intent captureIntent;
+        if(acceptTypes.indexOf("image")!=-1) {
+            file = new File(imageStorageDir + File.separator + "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+            captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        }else{
+//        if(acceptTypes.indexOf("vedio")!=-1) {
+            file= new File(imageStorageDir + File.separator + "VEDIO_" + String.valueOf(System.currentTimeMillis()) + ".mp4");
+            captureIntent= new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        }
         imageUri = Uri.fromFile(file);
 
         final List<Intent> cameraIntents = new ArrayList<Intent>();
-        final Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         final PackageManager packageManager = getPackageManager();
         final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
         for(ResolveInfo res : listCam) {
@@ -240,8 +251,14 @@ public class Check_List extends AppCompatActivity {
         }
         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
-        i.setType("image/*");
-        Intent chooserIntent = Intent.createChooser(i,"Image Chooser");
+//        i.setType("image/*");
+
+        if(acceptTypes.indexOf("image")!=-1) {
+            i.setType("image/*");
+        }else{
+            i.setType("video/*");
+        }
+        Intent chooserIntent = Intent.createChooser(i," Chooser");
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[]{}));
         Check_List.this.startActivityForResult(chooserIntent,  FILECHOOSER_RESULTCODE);
     }

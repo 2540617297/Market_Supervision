@@ -15,13 +15,18 @@ public class SynthesizeQuery extends AppCompatActivity {
 
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.Statistic_Form:
-                Intent statistic=new Intent(SynthesizeQuery.this,StatisticsForm.class);
-                startActivity(statistic);
-                break;
+
             case R.id.EnterPriseQuery:
                 Intent enterPriseQuery=new Intent(SynthesizeQuery.this,EnterPriseList.class);
                 startActivity(enterPriseQuery);
+                break;
+            case R.id.Patrol_Record:
+                Intent patrolRecord=new Intent(SynthesizeQuery.this,PatrolRecord.class);
+                startActivity(patrolRecord);
+                break;
+            case R.id.map:
+                Intent map = new Intent(SynthesizeQuery.this, Map.class);
+                startActivity(map);
                 break;
         }
     }

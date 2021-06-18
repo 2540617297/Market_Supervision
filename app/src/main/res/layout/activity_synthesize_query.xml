@@ -43,14 +43,15 @@
 
         </Button>
         <Button
-                android:text="统计报表"
+                android:text="巡查记录"
                 android:onClick="onClick"
-                android:id="@+id/Statistic_Form"
+                android:id="@+id/Patrol_Record"
                 android:background="@color/text_yellow"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="@dimen/font_16"
                 android:layout_height="wrap_content">
         </Button>
+
         <Button
                 android:text="企业信息查询"
                 android:onClick="onClick"
@@ -64,6 +65,15 @@
                 android:text="法规查询"
                 android:onClick="onClick"
                 android:id="@+id/task_distribution"
+                android:background="@color/text_yellow"
+                android:layout_marginBottom="@dimen/font_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        </Button>
+        <Button
+                android:text="定位显示"
+                android:onClick="onClick"
+                android:id="@+id/map"
                 android:background="@color/text_yellow"
                 android:layout_marginBottom="@dimen/font_16"
                 android:layout_width="match_parent"

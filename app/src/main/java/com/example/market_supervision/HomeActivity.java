@@ -137,10 +137,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Intent taskDistribution = new Intent(HomeActivity.this, TaskDistribution.class);
                 startActivity(taskDistribution);
                 break;
-            case R.id.map:
-                Intent map = new Intent(HomeActivity.this, Map.class);
-                startActivity(map);
-                break;
+
             case R.id.Mobile_Law:
                 Intent mobileLaw = new Intent(HomeActivity.this,MobileLaw.class);
                 startActivity(mobileLaw);
@@ -153,13 +150,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Intent query=new Intent(HomeActivity.this,SynthesizeQuery.class);
                 startActivity(query);
                 break;
-            case R.id.Patrol_Record:
-                Intent patrolRecord=new Intent(HomeActivity.this,PatrolRecord.class);
-                startActivity(patrolRecord);
-                break;
             case R.id.service:
                 Intent service=new Intent(HomeActivity.this,ServiceShowList.class);
                 startActivity(service);
+                break;
+            case R.id.Statistic_Form:
+                Intent statistic=new Intent(HomeActivity.this,StatisticsForm.class);
+                startActivity(statistic);
+                break;
+            case R.id.fileChoose:
+                Intent fileChoose=new Intent(HomeActivity.this,FileChoose.class);
+                startActivity(fileChoose);
                 break;
         }
         fTransaction.commit();
