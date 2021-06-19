@@ -28,6 +28,10 @@ public class SynthesizeQuery extends AppCompatActivity {
                 Intent map = new Intent(SynthesizeQuery.this, Map.class);
                 startActivity(map);
                 break;
+            case R.id.law:
+                Intent law=new Intent(SynthesizeQuery.this,LawList.class);
+                startActivity(law);
+                break;
         }
     }
 }

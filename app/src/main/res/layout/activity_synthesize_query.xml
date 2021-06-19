@@ -33,16 +33,6 @@
                   android:layout_height="wrap_content"
                   android:orientation="vertical">
         <Button
-                android:text="案件查询"
-                android:onClick="onClick"
-                android:id="@+id/back_log"
-                android:background="@color/text_yellow"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/font_16"
-                android:layout_height="wrap_content">
-
-        </Button>
-        <Button
                 android:text="巡查记录"
                 android:onClick="onClick"
                 android:id="@+id/Patrol_Record"
@@ -64,7 +54,7 @@
         <Button
                 android:text="法规查询"
                 android:onClick="onClick"
-                android:id="@+id/task_distribution"
+                android:id="@+id/law"
                 android:background="@color/text_yellow"
                 android:layout_marginBottom="@dimen/font_16"
                 android:layout_width="match_parent"

@@ -128,6 +128,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(HomeActivity.this, UserInfoEdit.class);
                 startActivity(intent);
                 break;
+            case R.id.tuichu:
+                Intent tuichu=new Intent(HomeActivity.this,LoginActivity.class);
+                SPUtils.remove(getApplicationContext(),"userId");
+                SPUtils.remove(getApplicationContext(),"userInfo");
+                SPUtils.remove(getApplicationContext(),"password");
+                SPUtils.remove(getApplicationContext(),"username");
+                finish();
+                startActivity(tuichu);
+                break;
             case R.id.back_log:
                 System.out.println(SPUtils.get(getApplicationContext(),"session","session"));
                 Intent backLog = new Intent(HomeActivity.this, BackLog.class);

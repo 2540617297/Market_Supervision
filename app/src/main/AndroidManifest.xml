@@ -35,8 +35,20 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".FileChoose"
+        <activity android:name=".LawList"
                   android:theme="@style/Account_Base.App.Theme.NoTitle">
+        </activity>
+        <activity
+                android:name=".IAList"
+                android:theme="@style/Account_Base.App.Theme.NoTitle">
+        </activity>
+        <activity
+                android:name=".SpotNoticeList"
+                android:theme="@style/Account_Base.App.Theme.NoTitle">
+        </activity>
+        <activity
+                android:name=".FileChoose"
+                android:theme="@style/Account_Base.App.Theme.NoTitle">
         </activity>
         <activity
                 android:name=".InitiateApplication"

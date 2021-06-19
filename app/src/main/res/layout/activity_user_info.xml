@@ -73,38 +73,38 @@
                 android:textSize="14sp"/>
 
     </RelativeLayout>
-    <RelativeLayout
-            android:id="@+id/re_xiangce"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:background="@color/bg_white"
-            android:clickable="true"
-            android:paddingLeft="12dp">
-        <ImageView
-                android:id="@+id/iv_xiangce"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="12dp"
-                android:src="@mipmap/image"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/iv_xiangce"
-                android:text="照片上传"
-                android:textColor="#353535"
-                android:textSize="16sp" />
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="0.2dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="12dp"
-                android:background="#dadada" />
+<!--    <RelativeLayout-->
+<!--            android:id="@+id/re_xiangce"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="65dp"-->
+<!--            android:background="@color/bg_white"-->
+<!--            android:clickable="true"-->
+<!--            android:paddingLeft="12dp">-->
+<!--        <ImageView-->
+<!--                android:id="@+id/iv_xiangce"-->
+<!--                android:layout_width="26dp"-->
+<!--                android:layout_height="26dp"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginLeft="12dp"-->
+<!--                android:src="@mipmap/image"/>-->
+<!--        <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginLeft="20dp"-->
+<!--                android:layout_toRightOf="@id/iv_xiangce"-->
+<!--                android:text="照片上传"-->
+<!--                android:textColor="#353535"-->
+<!--                android:textSize="16sp" />-->
+<!--        <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0.2dp"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:layout_marginRight="12dp"-->
+<!--                android:background="#dadada" />-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
     <RelativeLayout
             android:id="@+id/re_aboutwe"
             android:layout_width="match_parent"
@@ -167,6 +167,7 @@
     <RelativeLayout
             android:layout_marginTop="10dp"
             android:id="@+id/tuichu"
+            android:onClick="onClick"
             android:layout_width="match_parent"
             android:background="@color/white"
             android:layout_height="48dp"

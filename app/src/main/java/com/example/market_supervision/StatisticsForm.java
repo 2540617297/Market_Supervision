@@ -23,6 +23,14 @@ public class StatisticsForm extends AppCompatActivity {
                 Intent rqList=new Intent(StatisticsForm.this,RecordQuestionList.class);
                 startActivity(rqList);
                 break;
+            case R.id.SF_SpotNotice:
+                Intent spotNotice=new Intent(StatisticsForm.this,SpotNoticeList.class);
+                startActivity(spotNotice);
+                break;
+            case R.id.IAApply:
+                Intent iAApply=new Intent(StatisticsForm.this,IAList.class);
+                startActivity(iAApply);
+                break;
         }
     }
 }
